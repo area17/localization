@@ -1,7 +1,7 @@
 ### General
 arrowParens: always
 trailingComma: none
-printWidth: 80
+printWidth: 120
 tabWidth: 4
 useTabs: false
 singleQuote: true
@@ -13,7 +13,7 @@ semi: false
 vueIndentScriptAndStyle: true
 
 ### PHP
-phpVersion: "7.4"
+phpVersion: "8.0"
 trailingCommaPHP: true
 braceStyle: psr-2
 

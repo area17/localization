@@ -32,9 +32,7 @@ class ServiceProvider extends IlluminateServiceProvider
     {
         $this->publishes(
             [
-                __DIR__ . '/../config/localization.php' => config_path(
-                    'localization.php',
-                ),
+                __DIR__ . '/../config/localization.php' => config_path('localization.php'),
             ],
             'config',
         );
@@ -44,10 +42,7 @@ class ServiceProvider extends IlluminateServiceProvider
 
     protected function mergeConfig(): void
     {
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/localization.php',
-            'localization',
-        );
+        $this->mergeConfigFrom(__DIR__ . '/../config/localization.php', 'localization');
     }
 
     public function configureContainer(): void
