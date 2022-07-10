@@ -51,15 +51,19 @@ class Localization
 
     protected string|null $cacheBasePrefix = null;
 
-    private array|string|null $headersLocale = null;
+    protected array|string|null $headersLocale = null;
 
-    private array|string|null $twillLocale = null;
+    protected array|string|null $twillLocale = null;
 
-    private mixed $routeLocale = null;
+    protected mixed $routeLocale = null;
+
+    protected Routing $routing;
 
     public function __construct()
     {
         $this->freshLocales();
+
+        $this->routing = new Routing();
     }
 
     protected function buildRedirect(string|null $url = null): RedirectResponse|null
@@ -113,34 +117,34 @@ class Localization
         return $locale;
     }
 
-    private function getAvailableLocales(): array
+    protected function getAvailableLocales(): array
     {
         return $this->availableLocales ?? ($this->availableLocales = config('translatable.locales', []));
     }
 
-    private function getBrowserLocale(): string|null
+    protected function getBrowserLocale(): string|null
     {
         return $this->browserLocale ?? ($this->browserLocale = $this->inferBrowserLocale());
     }
 
-    private function getCookieLocale(): array|string|null
+    protected function getCookieLocale(): array|string|null
     {
         return $this->cookieLocale ?? ($this->cookieLocale = $this->getRequest()->cookie($this->cookieName));
     }
 
-    private function getHeadersLocale(): string|null
+    protected function getHeadersLocale(): string|null
     {
         $xLang = request()->header('X-LANG');
 
         return is_array($xLang) ? $xLang[0] ?? '' : $xLang;
     }
 
-    private function getLoggedUserLocale(): string|null
+    protected function getLoggedUserLocale(): string|null
     {
         return auth()->user()->locale ?? (auth()->user()->language ?? null);
     }
 
-    private function getQueryLocale(): string|null
+    protected function getQueryLocale(): string|null
     {
         $locale = $this->cleanupLocale($this->getRequest()->get('locale'));
 
@@ -149,7 +153,7 @@ class Localization
         return $this->queryLocale ?? ($this->queryLocale = $locale);
     }
 
-    private function getRouteLocale(): string|null
+    protected function getRouteLocale(): string|null
     {
         $uri = $this->getRequestUri();
 
@@ -492,7 +496,7 @@ class Localization
         return $this->removeFirstSlash($this->replaceTranslatedParameters($path, $this->getRouteByUrl($url)));
     }
 
-    private function getTwillLocale(): string|null
+    protected function getTwillLocale(): string|null
     {
         return $this->getRequest()->get('activeLanguage');
     }
@@ -506,7 +510,7 @@ class Localization
         return $this;
     }
 
-    private function getRequestUri(): array|string|null
+    protected function getRequestUri(): array|string|null
     {
         return $this->getRequest()->server('REQUEST_URI', $_SERVER['REQUEST_URI'] ?? null);
     }
@@ -540,5 +544,10 @@ class Localization
         }
 
         return $this->getLocale();
+    }
+
+    public function routing(): Routing
+    {
+        return $this->routing;
     }
 }
