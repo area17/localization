@@ -115,15 +115,12 @@ phpStan()
     checkExecutable "PHPStan" $PHPSTAN
 
     LOGFILE="$LOGS_PATH/phpstan.log"
-    PATHS_FILE="$TEMP_PATH/phpstan.files.txt"
 
     if [ "$FILES" = "." ]; then
         if ! $PHPSTAN analyse >> $LOGFILE; then
             fatalError "PHPStan finished with errors"
         fi
     else
-        \rm "$PATHS_FILE"
-
         if ! $PHPSTAN analyse $FILES >$LOGFILE 2>&1; then
             fatalError "PHPStan finished with errors"
         fi
@@ -151,7 +148,7 @@ checkExecutable()
 {
     if [ ! -f "$2" ]; then
         echo
-        echo "The executable for $1 ($1) wa not found."
+        echo "The executable for $1 ($1) wa not found at $2."
         echo
 
         exit 1
