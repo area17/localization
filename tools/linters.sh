@@ -64,6 +64,8 @@ init()
     if [ -z ${BLAST+x} ]; then
         BLAST="php artisan blast:publish"
     fi
+
+    checkNPM
 }
 
 phpCsFixer()
@@ -202,6 +204,18 @@ buildArguments()
 
     if [ "$FILES" = "" ]; then
         FILES='.'
+    fi
+}
+
+checkNPM() {
+    if [ ! -d "node_modules" ]; then
+        echo
+        echo "Installing NPM packages..."
+        echo
+
+        LOGFILE="$LOGS_PATH/npm.log"
+
+        npm install >$LOGFILE 2>&1
     fi
 }
 
