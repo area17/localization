@@ -35,6 +35,6 @@ class Helpers
 
     public static function loadGlobalHelpers(): void
     {
-        require __DIR__ . '/helpers-global.php';
+        require __DIR__ . '/global-helpers.php';
     }
 }

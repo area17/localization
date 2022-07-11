@@ -515,7 +515,7 @@ class Localization
         return $this->getRequest()->server('REQUEST_URI', $_SERVER['REQUEST_URI'] ?? null);
     }
 
-    public function getInstance(): self
+    public function instance(): self
     {
         return $this;
     }
