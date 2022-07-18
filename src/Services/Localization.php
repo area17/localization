@@ -119,7 +119,9 @@ class Localization
 
     protected function getAvailableLocales(): array
     {
-        return $this->availableLocales ?? ($this->availableLocales = config('translatable.locales', []));
+        return $this->availableLocales = filled($this->availableLocales)
+            ? $this->availableLocales
+            : config('translatable.locales', []);
     }
 
     protected function getBrowserLocale(): string|null
